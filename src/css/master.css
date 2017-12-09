@@ -1,0 +1,82 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #cacaca;
+}
+
+canvas {
+  border: 4px inset #bfbfbf;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 10px);
+  margin: 0 auto;
+}
+
+.game {
+  max-width: 680px;
+  border: 4px outset #bfbfbf;
+  text-align: center;
+  padding: 10px;
+  margin: 25px auto 0;
+  position: relative;
+
+  & header {
+    margin: 0 0 25px;
+  }
+
+  & button {
+    border: 4px outset #bfbfbf;
+    background-image: url('../img/windows.gif');
+    background-color: #bfbfbf;
+    width: 30px;
+    background-position: 0 100%;
+    background-size: auto 200%;
+    height: 30px;
+
+    & span {
+      display: none;
+    }
+
+    &.face {
+      width: 48px;
+      height: 48px;
+      background-position: 0 100%;
+      background-size: auto 200%;
+
+      &:active,
+      &.active {
+        background-position: 20% 100%;
+      }
+    }
+
+    &:active,
+    &.active {
+      border-style: inset;
+    }
+  }
+
+  &.click button.face,
+  & button.medium {
+    background-position: 20% 100%;
+  }
+
+  &.win button.face,
+  & button.easy {
+    background-position: 40% 100%;
+  }
+
+  &.lose button.face,
+  & button.hard {
+    background-position: 60% 100%;
+  }
+
+  & aside {
+    position: absolute;
+    right: 15px;
+    top: 25px;
+  }
+}
