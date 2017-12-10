@@ -9,7 +9,7 @@ export default {
   ],
   output: {
     filename: 'index.min.js',
-    path: path.resolve(__dirname, 'public/dist')
+    path: path.resolve(__dirname, 'docs/dist')
   },
   resolve: {
     extensions: ['.js', '.json', '.css']
