@@ -35,6 +35,16 @@ export default class Game {
       });
 
     Observable
+      .fromEvent(this.canvas, 'touchstart')
+      .subscribe(e => {
+        const gameClasses = globals.gameElem.classList;
+        if (!gameClasses.contains('lose') && !gameClasses.contains('win')) {
+          gameClasses.add('click');
+        }
+        this.click(e);
+      });
+
+    Observable
       .fromEvent(this.canvas, 'mouseup')
       .subscribe(e => {
         globals.gameElem.classList.remove('click');
