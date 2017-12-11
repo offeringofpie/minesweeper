@@ -27,20 +27,12 @@ export default class Game {
     Observable
       .fromEvent(this.canvas, 'mousedown')
       .subscribe(e => {
-        const gameClasses = globals.gameElem.classList;
-        if (!gameClasses.contains('lose') && !gameClasses.contains('win')) {
-          gameClasses.add('click');
-        }
         this.click(e);
       });
 
     Observable
       .fromEvent(this.canvas, 'touchstart')
       .subscribe(e => {
-        const gameClasses = globals.gameElem.classList;
-        if (!gameClasses.contains('lose') && !gameClasses.contains('win')) {
-          gameClasses.add('click');
-        }
         this.click(e);
       });
 
@@ -58,6 +50,11 @@ export default class Game {
   click(e) {
     let x = Math.floor(e.offsetX*this.cols/this.canvas.clientWidth);
     let y = Math.floor(e.offsetY*this.rows/this.canvas.clientHeight);
+
+    const gameClasses = globals.gameElem.classList;
+    if (!gameClasses.contains('lose') && !gameClasses.contains('win')) {
+      gameClasses.add('click');
+    }
 
     if (e.buttons === 1) {
       if (this.field.hasMine(x,y)) {
