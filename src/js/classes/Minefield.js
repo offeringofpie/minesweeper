@@ -14,6 +14,7 @@ export default class Minefield {
     this.mines = mines;
     this.mineField = [];
     this.image = new Image(512,85);
+    this.firstFlag = false;
     this.gameOver = false;
     this.subject = globals.subject;
   }
@@ -61,17 +62,20 @@ export default class Minefield {
       });
     })
 
-
     this.plantMines(this.mines);
-    // this.reveal();
   }
 
   reveal(x,y) {
     if (!this.gameOver) {
       this.mineField.forEach((v,c) => {
-        this.mineField[c].forEach((v,r) => {
-          this.drawTile(c,r);
-          this.mineField[c][r].hidden = 0;
+        this.mineField[c].forEach((tile,r) => {
+          if (tile.flag && !tile.bomb) {
+            tile.flag = 0;
+            this.drawTile(c,r,'flag');
+          } else {
+            this.drawTile(c,r);
+            tile.hidden = 0;
+          }
         });
       });
       this.drawTile(x,y,'boom');
@@ -88,20 +92,24 @@ export default class Minefield {
     ];
     let clickedTile = this.mineField[x][y];
 
-    matrix.forEach(([c,r]) => {
-      if (c>=0 && r>=0 && c<this.cols && r<this.rows) {
-        let tile = this.mineField[c][r];
-        if (tile.bomb || !tile.hidden || (clickedTile.adjacent && !clickedTile.hidden)) {
-          return;
-        } else {
-          tile.hidden = 0;
-          this.drawTile(c,r,'dig');
-          if (!tile.adjacent) {
-            this.revealArea(c,r);
-          }
-        };
-      }
-    });
+    if ((!clickedTile.hidden && clickedTile.adjacent) || clickedTile.flag) {
+
+    } else {
+      matrix.forEach(([c,r]) => {
+        if (c>=0 && r>=0 && c<this.cols && r<this.rows) {
+          let tile = this.mineField[c][r];
+          if (tile.bomb || !tile.hidden || tile.flag) {
+            return;
+          } else {
+            tile.hidden = 0;
+            this.drawTile(c,r,'dig');
+            if (!tile.adjacent) {
+              this.revealArea(c,r);
+            }
+          };
+        }
+      });
+    }
 
     this.checkEndGame();
   }
@@ -193,8 +201,10 @@ export default class Minefield {
   flag(x,y) {
     const tile = this.mineField[x][y];
 
-    this.drawTile(x,y,'flag');
-    tile.flag = !tile.flag;
+    if (tile.hidden) {
+      this.drawTile(x,y,'flag');
+      tile.flag = !tile.flag;
+    }
   }
 
   hasMine(x,y) {
@@ -205,7 +215,7 @@ export default class Minefield {
     }
   }
 
-  isFlagged(x,y) {
+  hasFlag(x,y) {
     if (x>=0 && y>=0 && x<this.cols && y<this.rows) {
       return this.mineField[x][y].flag;
     } else {

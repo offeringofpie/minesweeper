@@ -57,10 +57,12 @@ export default class Game {
     }
 
     if (e.buttons === 1) {
-      if (this.field.hasMine(x,y)) {
-        this.field.reveal(x,y,'boom');
-      } else {
-        this.field.revealArea(x,y);
+      if (!this.field.hasFlag(x,y)) {
+        if (this.field.hasMine(x,y)) {
+          this.field.reveal(x,y,'boom');
+        } else {
+          this.field.revealArea(x,y);
+        }
       }
     } else if (e.buttons === 2) {
       this.field.flag(x,y);

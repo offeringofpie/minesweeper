@@ -2,11 +2,11 @@
   "name": "Minesweeper",
   "version": "0.0.1",
   "description": "Minesweeper in canvas",
-  "main": "index.js",
+  "author": "J. Lopes",
+  "repository": "https://github.com/offeringofpie/minesweeper",
+  "license": "MIT",
   "scripts": {
-    "start": "npm run dev:server",
-    "dev:watch": "webpack --watch &",
-    "dev:server": "webpack-dev-server --port 9000"
+    "start": "webpack"
   },
   "babel": {
     "presets": [
