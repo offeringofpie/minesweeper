@@ -1,25 +1,30 @@
 import globals from '../globals';
 
 export default class Minefield {
-  constructor(canvas, cols, rows, mines) {
-    this.canvas = canvas;
-    this.context = canvas.getContext('2d');
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.cols = cols;
-    this.rows = rows;
-    this.colSize = this.width / cols;
-    this.rowSize = this.height / rows;
-    this.tileSize = (this.colSize+this.rowSize)/2;
-    this.mines = mines;
+  constructor() {
+    this.canvas = globals.canvas;
+    this.context = globals.canvas.getContext('2d');
+    this.width = globals.canvas.width;
+    this.height = globals.canvas.height;
+    this.cols = 0;
+    this.rows = 0;
+    this.colSize = 0;
+    this.rowSize = 0;
+    this.tileSize = 0;
+    this.mines = 0;
     this.mineField = [];
     this.image = new Image(512,85);
-    this.firstFlag = false;
     this.gameOver = false;
     this.subject = globals.subject;
   }
 
-  init() {
+  init(cols, rows, mines) {
+    this.cols = cols;
+    this.colSize = this.width / cols;
+    this.mines = mines;
+    this.rows = rows;
+    this.rowSize = this.height / rows;
+    this.tileSize = (this.colSize+this.rowSize)/2;
     this.context.imageSmoothingEnabled = false;
     this.image.src = './img/windows.gif';
 
@@ -40,9 +45,8 @@ export default class Minefield {
 
   clean() {
     this.gameOver = false;
-    const context = this.context;
-
-    context.clearRect(0, 0, this.width, this.height);
+    this.mineField = [];
+    this.context.clearRect(0, 0, this.width, this.height);
 
     for (let r = 0; r<this.rows; ++r) {
       this.mineField[r] = [];

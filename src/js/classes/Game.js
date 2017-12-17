@@ -4,13 +4,13 @@ import {Observable, Subject} from "rxjs/Observable";
 import 'rxjs/add/observable/fromEvent';
 
 export default class Game {
-  constructor(canvas, cols, rows, mines) {
-    this.canvas = canvas;
-    this.context = canvas.getContext('2d');
+  constructor(cols, rows, mines) {
+    this.canvas = globals.canvas;
+    this.context = globals.canvas.getContext('2d');
     this.cols = cols;
     this.rows = rows;
     this.mines = mines;
-    this.field = new Field(canvas, cols, rows, mines);
+    this.field = new Field();
   }
 
   init(cols = this.cols, rows = this.rows, mines = this.mines) {
@@ -20,9 +20,8 @@ export default class Game {
       this.mines = mines;
     }
 
-    this.field = new Field(this.canvas, this.cols, this.rows, this.mines);
     this.field.clean();
-    this.field.init();
+    this.field.init(this.cols, this.rows, this.mines);
 
     Observable
       .fromEvent(this.canvas, 'mousedown')
@@ -58,6 +57,7 @@ export default class Game {
 
     if (e.buttons === 1) {
       if (!this.field.hasFlag(x,y)) {
+        console.log(this.field.mineField[x][y])
         if (this.field.hasMine(x,y)) {
           this.field.reveal(x,y,'boom');
         } else {

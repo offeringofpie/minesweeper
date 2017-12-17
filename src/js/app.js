@@ -5,7 +5,7 @@ let rows = 20;
 let cols = 20;
 let mines = 50;
 
-const game = new Game(globals.canvas,rows,cols,mines);
+const game = new Game(rows,cols,mines);
 
 globals.buttons.forEach(button => {
   button.addEventListener('click',e => {
@@ -35,4 +35,4 @@ globals.buttons.forEach(button => {
   });
 })
 
-game.init();
+game.init(rows,cols,mines);
