@@ -7,6 +7,7 @@ export default class Game {
   constructor(cols, rows, mines) {
     this.canvas = globals.canvas;
     this.context = globals.canvas.getContext('2d');
+    this.firstRun = true;
     this.cols = cols;
     this.rows = rows;
     this.mines = mines;
@@ -23,27 +24,31 @@ export default class Game {
     this.field.clean();
     this.field.init(this.cols, this.rows, this.mines);
 
-    Observable
-      .fromEvent(this.canvas, 'mousedown')
-      .subscribe(e => {
-        this.click(e);
+    if (this.firstRun) {
+      Observable
+        .fromEvent(this.canvas, 'mousedown')
+        .subscribe(e => {
+          this.click(e);
+        });
+
+      Observable
+        .fromEvent(this.canvas, 'touchstart')
+        .subscribe(e => {
+          this.click(e);
+        });
+
+      Observable
+        .fromEvent(this.canvas, 'mouseup')
+        .subscribe(e => {
+          globals.gameElem.classList.remove('click');
+        });
+
+      this.canvas.addEventListener('contextmenu', e => {
+        e.preventDefault();
       });
 
-    Observable
-      .fromEvent(this.canvas, 'touchstart')
-      .subscribe(e => {
-        this.click(e);
-      });
-
-    Observable
-      .fromEvent(this.canvas, 'mouseup')
-      .subscribe(e => {
-        globals.gameElem.classList.remove('click');
-      });
-
-    this.canvas.addEventListener('contextmenu', e => {
-      e.preventDefault();
-    });
+      this.firstRun = false;
+    }
   }
 
   click(e) {
