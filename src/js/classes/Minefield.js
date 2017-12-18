@@ -96,8 +96,7 @@ export default class Minefield {
     ];
     let clickedTile = this.mineField[x][y];
 
-    if ((!clickedTile.hidden && clickedTile.adjacent) || clickedTile.flag) {
-
+    if ((!clickedTile.hidden && this.proximityMine(x, y) && (this.proximityFlag(x, y) !== this.proximityMine(x, y))) || clickedTile.flag) {
     } else {
       matrix.forEach(([c,r]) => {
         if (c>=0 && r>=0 && c<this.cols && r<this.rows) {
@@ -240,12 +239,25 @@ export default class Minefield {
     }
   }
 
+  proximityFlag(x,y) {
+    let matrix = [
+      [x-1,y-1],[x,y-1],[x+1,y-1],
+      [x-1,y],[x,y],[x+1,y],
+      [x-1,y+1],[x,y+1],[x+1,y+1]
+    ]
+    if (x>=0 && y>=0 && x<this.cols && y<this.rows) {
+      return matrix.filter(([x,y]) => this.hasFlag(x,y)).length;
+    } else {
+      return;
+    }
+  }
+
   markAdjacentTiles() {
     this.mineField.forEach((v,c) => {
-      this.mineField[c].forEach((v,r) => {
+      this.mineField[c].forEach((tile,r) => {
         let adjacent = this.proximityMine(c,r);
         if (adjacent && !this.hasMine(c,r)) {
-          this.mineField[c][r].adjacent = adjacent;
+          tile.adjacent = adjacent;
         }
       });
     });
