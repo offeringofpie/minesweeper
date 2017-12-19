@@ -62,7 +62,6 @@ export default class Game {
 
     if (e.buttons === 1) {
       if (!this.field.hasFlag(x,y)) {
-        console.log(this.field.mineField[x][y])
         if (this.field.hasMine(x,y)) {
           this.field.reveal(x,y,'boom');
         } else {

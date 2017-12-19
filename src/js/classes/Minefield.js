@@ -101,7 +101,7 @@ export default class Minefield {
       matrix.forEach(([c,r]) => {
         if (c>=0 && r>=0 && c<this.cols && r<this.rows) {
           let tile = this.mineField[c][r];
-          if (tile.bomb || !tile.hidden || tile.flag) {
+          if ((tile.bomb && !(this.proximityFlag(c,r) == this.proximityMine(c,r))) || !tile.hidden || tile.flag) {
             return;
           } else {
             tile.hidden = 0;
