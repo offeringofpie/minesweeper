@@ -1,2 +1,12 @@
-node_modules
-.DS_Store
+*
+!docs
+!src
+!docs/**/*
+!src/**/*
+!.gitinore
+!CHANGELOG.md
+!LICENSE
+!package.json
+!postcss.config.js
+!README.md
+!webpack.config.js
