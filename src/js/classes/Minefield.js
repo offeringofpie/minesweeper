@@ -26,7 +26,7 @@ export default class Minefield {
     this.rowSize = this.height / rows;
     this.tileSize = (this.colSize+this.rowSize)/2;
     this.context.imageSmoothingEnabled = false;
-    this.image.src = './img/windows.gif';
+    this.image.src = './dist/img/windows.gif';
 
     this.image.onload = () => {
       this.clean();

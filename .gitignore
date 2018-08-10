@@ -1,9 +1,10 @@
-*
+/*
 !docs
 !src
 !docs/**/*
 !src/**/*
-!.gitinore
+!.gitignore
+!.gitlab-ci.yml
 !CHANGELOG.md
 !LICENSE
 !package.json
