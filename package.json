@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-serve --config ./webpack.config.js",
-    "build": "webpack --mode production"
+    "clean": "rimraf docs",
+    "build": "npm run clean && webpack --mode production"
   },
   "babel": {
     "presets": [
@@ -43,6 +44,7 @@
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.6",
+    "rimraf": "^2.6.2",
     "rxjs": "^5.5.11",
     "style-loader": "^0.19.1",
     "webpack": "^4.16.5",

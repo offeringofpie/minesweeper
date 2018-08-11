@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
     mode: 'development',
     entry: ['./src/main.js'],
     output: {
-      filename: 'dist/index.min.js',
+      filename: 'index.min.js',
       path: path.resolve(__dirname, 'docs')
     },
     resolve: {
@@ -32,14 +32,15 @@ module.exports = (env, argv) => {
           test: /\.(?:png|jpg|svg|gif)$/,
           loader: 'file-loader',
           options: {
-            name: 'dist/img/[name].[ext]'
+            name: './img/[name].[ext]'
           }
         }
       ]
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'style.min.css'
+        filename: 'style.min.css',
+        outputPath: 'dist'
       }),
       new HtmlWebpackPlugin({
         template: __dirname + '/src/index.ejs',
@@ -56,7 +57,7 @@ module.exports = (env, argv) => {
         }
       })
     ],
-    devtool: 'source-map',
+    devtool: '#source-map',
     performance: { hints: false },
     serve: {
       contentBase: path.join(__dirname, 'docs'),
